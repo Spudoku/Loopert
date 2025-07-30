@@ -14,7 +14,7 @@ public class InputManager : MonoBehaviour
 
     private InputAction _moveAction;
     private InputAction _jumpAction;
-    private InputAction _runAction;
+    // private InputAction _runAction;
 
     private void Awake()
     {
@@ -22,7 +22,7 @@ public class InputManager : MonoBehaviour
 
         _moveAction = playerInput.actions["Move"];
         _jumpAction = playerInput.actions["Jump"];
-        _runAction = playerInput.actions["Run"];
+        // _runAction = playerInput.actions["Run"];
     }
 
     private void Update()
@@ -33,6 +33,6 @@ public class InputManager : MonoBehaviour
         JumpIsHeld = _jumpAction.IsPressed();
         JumpWasReleased = _jumpAction.WasReleasedThisFrame();
 
-        RunIsHeld = _runAction.IsPressed();
+        // RunIsHeld = _runAction.IsPressed();
     }
 }
