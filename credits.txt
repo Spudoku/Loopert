@@ -1,0 +1,5 @@
+Scripting
+
+Sasquatch B Studios: tutorial on 2D platformer player PlayerController
+    Code based on https://www.youtube.com/watch?v=zHSWG05byEc
+

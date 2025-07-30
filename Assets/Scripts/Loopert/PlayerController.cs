@@ -1,37 +1,49 @@
 using UnityEngine;
 
+// // Code based on https://www.youtube.com/watch?v=zHSWG05byEc
 public class PlayerController : MonoBehaviour
 {
     Animator animator;
     Rigidbody2D rb;
 
-    Collider2D collider;
+    [Header("References")]
+    public PlayerMoveStats MoveStats;
 
-    [SerializeField] float maxSpeed;
-    [SerializeField] float acceleration;
-    [SerializeField] float jumpStrength;
+    [SerializeField] private Collider2D bodyColl;
+    [SerializeField] private Collider2D footColl;
 
-    [SerializeField] float gravityScale = 2f;
+    private Vector2 moveVel;
+    private bool isFacingRight;
 
+    private RaycastHit2D groundHit;
+    private RaycastHit2D headHit;
+    private bool isGrounded;
+    private bool bumpedHead;
 
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Awake()
     {
-        animator = GetComponent<Animator>();
+        isFacingRight = true;
         rb = GetComponent<Rigidbody2D>();
-        collider = GetComponent<Collider2D>();
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    #region Movement
+
+    private void Move(float acceleration, float deceleration, Vector2 moveInput)
     {
-        float horizontal = Input.GetAxis("Horizontal") * acceleration;
+        if (moveInput != Vector2.zero)
+        {
+            // check if turn is needed
 
-        rb.AddForce(new(horizontal, 0), ForceMode2D.Force);
-        rb.linearVelocity
+            Vector2 targetVelocity = new Vector2(moveInput.x, 0) * MoveStats.MaxWalkSpeed;
+
+            // moveVel = 
 
 
+
+
+        }
     }
+
+
+    #endregion
 }
