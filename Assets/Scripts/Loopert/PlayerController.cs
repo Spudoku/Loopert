@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
 
     private RaycastHit2D groundHit;
     private RaycastHit2D headHit;
-    private bool isGrounded;
+    [SerializeField] private bool isGrounded;
     private bool bumpedHead;
 
     // Jump Vars
@@ -174,7 +174,7 @@ public class PlayerController : MonoBehaviour
             InitiateJump(1);
         }
         // handle air jump after coyote time
-        else if (jumpBufferTimer > 0f && isFalling && numberOfJumpsUsed < MoveStats.NumberOfJumpsAllowed)
+        else if (jumpBufferTimer > 0f && isFalling && numberOfJumpsUsed < MoveStats.NumberOfJumpsAllowed - 1)
         {
             InitiateJump(MoveStats.NumberOfJumpsAllowed - numberOfJumpsUsed);
             isFastFalling = false;
@@ -196,10 +196,6 @@ public class PlayerController : MonoBehaviour
     private void InitiateJump(int _numberOfJumpsUsed)
     {
         isJumping = true;
-        // if (!isJumping)
-        // {
-
-        // }
 
         jumpBufferTimer = 0f;
 
@@ -219,22 +215,89 @@ public class PlayerController : MonoBehaviour
             }
 
             // gravity on ascending
-            if ()
+            if (VerticalVelocity >= 0f)
             {
+                // apex controls
+                apexPoint = Mathf.InverseLerp(MoveStats.InitialJumpVelocity, 0f, VerticalVelocity);
 
+                if (apexPoint > MoveStats.ApexThreshold)
+                {
+
+                    if (!isPastApexThreshold)
+                    {
+                        isPastApexThreshold = true;
+                        timePastApexThreshold = 0f;
+                    }
+
+                    if (isPastApexThreshold)
+                    {
+                        timePastApexThreshold += Time.fixedDeltaTime;
+
+                        if (timePastApexThreshold < MoveStats.ApexHangTime)
+                        {
+                            VerticalVelocity = 0f;
+                        }
+                        else
+                        {
+                            VerticalVelocity = -0.01f;
+                        }
+                    }
+                }
+                // gravity on ascending but not past apex threshold
+                else
+                {
+                    VerticalVelocity += MoveStats.Gravity * Time.fixedDeltaTime;
+                    if (isPastApexThreshold)
+                    {
+                        isPastApexThreshold = false;
+                    }
+                }
             }
-            // apex controls
 
             // gravity on descending
+
+            else if (!isFastFalling)
+            {
+                VerticalVelocity += MoveStats.Gravity * MoveStats.GravityOnReleaseMultiplier * Time.fixedDeltaTime;
+            }
+
+            else if (VerticalVelocity < 0f)
+            {
+                if (!isFalling)
+                {
+                    isFalling = true;
+                }
+            }
+
         }
-
-
         // jump cut
+        if (isFastFalling)
+        {
+            if (fastFallTime >= MoveStats.TimeForUpwardsCancel)
+            {
+                VerticalVelocity += MoveStats.Gravity * MoveStats.GravityOnReleaseMultiplier * Time.fixedDeltaTime;
+            }
+            else if (fastFallTime < MoveStats.TimeForUpwardsCancel)
+            {
+                VerticalVelocity = Mathf.Lerp(fastFallReleaseSpeed, 0f, (fastFallTime / MoveStats.TimeForUpwardsCancel));
+            }
 
+            fastFallTime += Time.deltaTime;
+        }
         // normal gravity while falling
+        if (!isGrounded && !isJumping)
+        {
+            if (!isFalling)
+            {
+                isFalling = true;
+            }
 
+            VerticalVelocity += MoveStats.Gravity * Time.fixedDeltaTime;
+        }
         // clamp fall speed
+        VerticalVelocity = Mathf.Clamp(VerticalVelocity, -MoveStats.MaxFallSpeed, 100f);
 
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, VerticalVelocity);
     }
     #endregion
 
@@ -251,6 +314,24 @@ public class PlayerController : MonoBehaviour
 
         isGrounded = groundHit.collider != null;
 
+    }
+
+    private void BumpedHead()
+    {
+        Vector2 boxCastOrigin = new Vector2(footColl.bounds.center.x, bodyColl.bounds.max.y);
+        Vector2 boxCastSize = new Vector2(footColl.bounds.size.x * MoveStats.HeadWidth, MoveStats.HeadDetectionRayLength);
+
+        headHit = Physics2D.BoxCast(boxCastOrigin, boxCastSize, 0f, Vector2.up, MoveStats.HeadDetectionRayLength, MoveStats.GroundLayer);
+
+        if (headHit.collider != null)
+        {
+            bumpedHead = true;
+        }
+        else
+        {
+            bumpedHead = false;
+        }
+        // If i wanted to implement debug visualization, go to https://youtu.be/zHSWG05byEc?t=1014
     }
 
     private void CollisionChecks()
