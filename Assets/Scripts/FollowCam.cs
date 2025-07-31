@@ -22,10 +22,5 @@ public class FollowCam : MonoBehaviour
         {
             transform.position = new(Mathf.Clamp(target.transform.position.x, minX, maxX), Mathf.Clamp(target.transform.position.y, minY, maxY), offset);
         }
-
-
-
-
-
     }
 }
