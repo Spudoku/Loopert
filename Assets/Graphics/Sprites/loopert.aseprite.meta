@@ -12,12 +12,12 @@ ScriptedImporter:
       type: UnityEngine:AnimationClip
       assembly: UnityEngine.AnimationModule
       name: idle
-    second: {fileID: 7400000, guid: b4c20ecfbe19eeb408f10a41e162e602, type: 2}
+    second: {fileID: 7400000, guid: 7928ad2bce33dac4da8a69ac122d80f9, type: 2}
   - first:
       type: UnityEngine:AnimationClip
       assembly: UnityEngine.AnimationModule
       name: moving
-    second: {fileID: 7400000, guid: 3b2e48452ee43df4aad236fc0d9c430f, type: 2}
+    second: {fileID: 7400000, guid: 30588e1b4c8925c4f9e21b09c0bb6139, type: 2}
   serializedVersion: 2
   userData: 
   assetBundleName: 
@@ -113,7 +113,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638895664380101328
+  platformSettingsDirtyTick: 638895687591019502
   textureAssetName: 
   singleSpriteImportData:
   - name: 

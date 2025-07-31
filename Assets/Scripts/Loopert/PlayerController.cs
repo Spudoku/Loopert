@@ -46,12 +46,23 @@ public class PlayerController : MonoBehaviour
     {
         isFacingRight = true;
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
         CountTimers();
         JumpChecks();
+
+        if (InputManager.Movement != Vector2.zero)
+        {
+            animator.SetBool("isMoving", true);
+
+        }
+        else
+        {
+            animator.SetBool("isMoving", false);
+        }
     }
 
     private void FixedUpdate()
