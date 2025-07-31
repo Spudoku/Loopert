@@ -322,8 +322,8 @@ ScriptedImporter:
     spritePhysicsOutline:
     - outline:
       - {x: 8, y: 0}
-      - {x: 6, y: 0}
-      - {x: -8, y: -7}
+      - {x: 8, y: 0}
+      - {x: -8, y: -8}
       - {x: -8, y: -8}
       - {x: 8, y: -8}
     indices: 
@@ -349,8 +349,8 @@ ScriptedImporter:
     spritePhysicsOutline:
     - outline:
       - {x: 8, y: 8}
-      - {x: 6, y: 8}
-      - {x: -8, y: 1}
+      - {x: 8, y: 8}
+      - {x: -8, y: 0}
       - {x: -8, y: -8}
       - {x: 8, y: -8}
     indices: 
@@ -375,8 +375,9 @@ ScriptedImporter:
     vertices: []
     spritePhysicsOutline:
     - outline:
-      - {x: 8, y: 1}
-      - {x: -6, y: 8}
+      - {x: 8, y: 0}
+      - {x: -8, y: 8}
+      - {x: -8, y: 8}
       - {x: -8, y: 8}
       - {x: -8, y: -8}
       - {x: 8, y: -8}
@@ -402,8 +403,8 @@ ScriptedImporter:
     vertices: []
     spritePhysicsOutline:
     - outline:
-      - {x: 8, y: -7}
-      - {x: -6, y: 0}
+      - {x: 8, y: -8}
+      - {x: -8, y: 0}
       - {x: -8, y: 0}
       - {x: -8, y: -8}
       - {x: 8, y: -8}
@@ -485,8 +486,8 @@ ScriptedImporter:
     - outline:
       - {x: 8, y: 8}
       - {x: -8, y: 8}
-      - {x: -8, y: 7}
-      - {x: 6, y: 0}
+      - {x: -8, y: 8}
+      - {x: 6, y: 1}
       - {x: 8, y: 0}
     indices: 
     edges: []
@@ -512,8 +513,8 @@ ScriptedImporter:
     - outline:
       - {x: 8, y: 8}
       - {x: -8, y: 8}
-      - {x: -8, y: -1}
-      - {x: 6, y: -8}
+      - {x: -8, y: 0}
+      - {x: 8, y: -8}
       - {x: 8, y: -8}
     indices: 
     edges: []
@@ -537,11 +538,11 @@ ScriptedImporter:
     vertices: []
     spritePhysicsOutline:
     - outline:
-      - {x: 8, y: -1}
+      - {x: 8, y: 0}
       - {x: 8, y: 8}
       - {x: -8, y: 8}
-      - {x: -8, y: -8}
-      - {x: -6, y: -8}
+      - {x: -8, y: -7}
+      - {x: -8, y: -7}
     indices: 
     edges: []
     tessellationDetail: 0
@@ -564,11 +565,11 @@ ScriptedImporter:
     vertices: []
     spritePhysicsOutline:
     - outline:
-      - {x: 8, y: 7}
+      - {x: 8, y: 8}
       - {x: 8, y: 8}
       - {x: -8, y: 8}
       - {x: -8, y: 0}
-      - {x: -6, y: 0}
+      - {x: -8, y: 0}
     indices: 
     edges: []
     tessellationDetail: 0

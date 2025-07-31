@@ -20,7 +20,7 @@ public class FollowCam : MonoBehaviour
     {
         if (target != null)
         {
-            transform.position = new(Mathf.Clamp(transform.position.x, minX, maxX), Mathf.Clamp(transform.position.y, minY, maxY), offset);
+            transform.position = new(Mathf.Clamp(target.transform.position.x, minX, maxX), Mathf.Clamp(target.transform.position.y, minY, maxY), offset);
         }
 
 

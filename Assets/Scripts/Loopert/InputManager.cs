@@ -11,9 +11,13 @@ public class InputManager : MonoBehaviour
     public static bool JumpWasReleased;
     public static bool RunIsHeld;
 
+    public static bool TurnIsHeld;
+
 
     private InputAction _moveAction;
     private InputAction _jumpAction;
+
+    private InputAction turnAction;
     // private InputAction _runAction;
 
     private void Awake()
@@ -22,17 +26,23 @@ public class InputManager : MonoBehaviour
 
         _moveAction = playerInput.actions["Move"];
         _jumpAction = playerInput.actions["Jump"];
+        // turnAction = playerInput.actions[];
         // _runAction = playerInput.actions["Run"];
     }
 
     private void Update()
     {
         Movement = _moveAction.ReadValue<Vector2>();
+        Debug.Log($"[InputManager.Update] {Movement}");
 
         JumpWasPressed = _jumpAction.WasPerformedThisFrame();
         JumpIsHeld = _jumpAction.IsPressed();
         JumpWasReleased = _jumpAction.WasReleasedThisFrame();
 
-        // RunIsHeld = _runAction.IsPressed();
+        TurnIsHeld = Movement.y < 0;
+        if (TurnIsHeld)
+        {
+            Debug.Log("[InputManager.Update] Turning!");
+        }
     }
 }

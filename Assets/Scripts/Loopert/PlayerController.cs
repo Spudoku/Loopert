@@ -61,11 +61,19 @@ public class PlayerController : MonoBehaviour
 
         if (isGrounded)
         {
-            Move(MoveStats.GroundAcceleration, MoveStats.GroundDeceleration, InputManager.Movement);
+            if (!InputManager.TurnIsHeld)
+            {
+                Move(MoveStats.GroundAcceleration, MoveStats.GroundDeceleration, InputManager.Movement);
+            }
+
         }
         else
         {
-            Move(MoveStats.AirAcceleration, MoveStats.AirDeceleration, InputManager.Movement);
+            if (!InputManager.TurnIsHeld)
+            {
+                Move(MoveStats.AirAcceleration, MoveStats.AirDeceleration, InputManager.Movement);
+            }
+
         }
     }
 
@@ -83,9 +91,6 @@ public class PlayerController : MonoBehaviour
 
             moveVel = Vector2.Lerp(moveVel, targetVelocity, acceleration * Time.fixedDeltaTime);
             rb.linearVelocity = new Vector2(moveVel.x, rb.linearVelocity.y);
-
-
-
         }
         else if (moveInput == Vector2.zero)
         {
