@@ -63,6 +63,8 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool("isMoving", false);
         }
+
+        animator.SetBool("isJumping", isJumping);
     }
 
     private void FixedUpdate()
