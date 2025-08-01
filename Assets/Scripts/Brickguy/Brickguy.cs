@@ -2,6 +2,7 @@ using System.Collections;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Animations;
+using UnityEngine.InputSystem;
 
 public class Brickguy : MonoBehaviour
 {
@@ -61,11 +62,11 @@ public class Brickguy : MonoBehaviour
             else
             {
                 // Move towards target
-                Vector2 dir = target.position - transform.position;
+                // Vector2 dir = target.position - transform.position;
 
-                Vector2 targetVel = new Vector2(Mathf.Sign(dir.x), 0) * maxSpeed;
-                moveVel = Vector2.Lerp(moveVel, targetVel, acceleration * Time.fixedDeltaTime);
-                rb.linearVelocity = new(moveVel.x, rb.linearVelocity.y);
+                // Vector2 targetVel = new Vector2(Mathf.Sign(dir.x), 0) * maxSpeed;
+                // moveVel = Vector2.Lerp(moveVel, targetVel, acceleration * Time.fixedDeltaTime);
+                // rb.linearVelocity = new(moveVel.x, rb.linearVelocity.y);
             }
 
 
@@ -97,6 +98,7 @@ public class Brickguy : MonoBehaviour
         if (throwForce == Vector2.zero)
         {
             Debug.Log($"[BrickGuy.Throw] can't throw brick; no valid launch angle!");
+            isThrowing = false;
             return;
         }
 
@@ -127,49 +129,34 @@ public class Brickguy : MonoBehaviour
     // code based on https://learn.unity.com/tutorial/calculating-trajectories
     private Vector2 CalculateTrajectory(Vector2 targetPosition, float force)
     {
+        Vector2 dir = targetPosition - (Vector2)transform.position;
 
-        float deltaX = targetPosition.x - transform.position.x;
-        float deltaY = targetPosition.y - transform.position.y;
-        Debug.Log($"[Brickguy.CalculateTrajectory] deltaX: {deltaX}; deltaY: {deltaY}");
+        float y = dir.y;
 
-        if (Mathf.Abs(deltaX) < 0.01f)
+        dir.y = 0f;
+
+        float x = dir.magnitude;
+
+        float g = -Physics2D.gravity.y;
+
+        float sSqr = force * force;
+
+        float discriminant = (sSqr * sSqr) - g * (g * x * x + 2 * y * sSqr);
+        Debug.Log($"[BrickGuy.CalculateTrajectory] discriminant: {discriminant}");
+
+        if (discriminant >= 0f)
         {
-            return new Vector2(0, force);
+            float root = Mathf.Sqrt(discriminant);
+            Debug.Log($"[BrickGuy.CalculateTrajectory] root: {root}");
+            float tanTheta = (sSqr + root) / 2;
+
+            float theta = Mathf.Atan2(tanTheta, g * x);
+
+            float vX = force * Mathf.Cos(theta);
+            float vY = force * Mathf.Sin(theta);
+            return new Vector2(vX, vY);
         }
+        return Vector2.zero;
 
-        float vSquared = force * force;
-        float g = -Physics.gravity.y;
-
-        // solving for launch angle theta
-        float a = 1;
-        float b = (-2 * vSquared) / (g * deltaX);
-        float c = (2 * vSquared * deltaY + (g * deltaX * deltaX)) / (g * deltaX * deltaX);
-
-
-        float discriminant = b * b - 4 * a * c;
-        // no valid angle
-        if (discriminant < 0)
-        {
-            return Vector2.zero;
-        }
-
-        // solving the quadratic
-
-        float tanTheta = (-b + Mathf.Sqrt(discriminant)) / (2 * a);
-
-        // calculate atan2 using the slope
-        float theta = Mathf.Atan2(tanTheta * Mathf.Abs(deltaX), Mathf.Abs(deltaX));
-
-
-
-        if (deltaX < 0)
-        {
-            theta += Mathf.PI;
-        }
-
-        float vX = force * Mathf.Cos(theta);
-        float vY = force * Mathf.Sin(theta);
-
-        return new Vector2(vX, vY);
     }
 }

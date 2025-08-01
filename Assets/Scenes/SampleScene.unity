@@ -1725,9 +1725,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1281104169}
   - component: {fileID: 1281104168}
+  - component: {fileID: 1281104172}
   - component: {fileID: 1281104170}
   - component: {fileID: 1281104171}
-  - component: {fileID: 1281104172}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -1872,8 +1872,8 @@ MonoBehaviour:
   target: {fileID: 1002222800}
   sightDistance: 10
   brickPrefab: {fileID: 1099586696597899559, guid: f59463bf48d64444d813f72603c983a1, type: 3}
-  throwStrength: 20
-  throwCooldown: 10
+  throwStrength: 10
+  throwCooldown: 1
   throwWindup: 1
   throwSFX: {fileID: 0}
 --- !u!1 &1385833486
