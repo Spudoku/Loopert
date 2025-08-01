@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // // Code based on https://www.youtube.com/watch?v=zHSWG05byEc
 public class PlayerController : MonoBehaviour
@@ -12,9 +14,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Collider2D bodyColl;
     [SerializeField] private Collider2D footColl;
 
-
-
-
     [SerializeField] private bool isGrounded;
 
     [Header("Slide-related")]
@@ -25,6 +24,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float stunTimer;
 
+    [Header("Level Interaction")]
+    [SerializeField] private float yToDie = -10f;
     // misc vars
     private bool bumpedHead;
 
@@ -69,6 +70,12 @@ public class PlayerController : MonoBehaviour
         if (stunTimer <= 0)
         {
             JumpChecks();
+            animator.SetBool("isStunned", false);
+        }
+        else
+        {
+            animator.SetBool("isStunned", true);
+            return;
         }
 
         if (InputManager.SlideIsHeld && stunTimer <= 0)
@@ -84,6 +91,7 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isSliding", false);
             slideColl.enabled = false;
             bodyColl.enabled = true;
+
         }
 
         if (InputManager.SlideWasReleased)
@@ -130,6 +138,26 @@ public class PlayerController : MonoBehaviour
             }
 
         }
+
+        if (transform.position.y < yToDie)
+        {
+            StartCoroutine(Die());
+        }
+
+    }
+
+    private IEnumerator Die()
+    {
+        // TODO: play sound effect, etc
+
+        Rigidbody2D[] rigidBodies = Object.FindObjectsByType<Rigidbody2D>(FindObjectsSortMode.None);
+
+        foreach (Rigidbody2D rb in rigidBodies)
+        {
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     #region Movement
@@ -406,6 +434,15 @@ public class PlayerController : MonoBehaviour
         if (enemy != null)
         {
             enemy.Die();
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Brickguy enemy = collision.gameObject.GetComponentInParent<Brickguy>();
+        if (enemy != null)
+        {
+            StartCoroutine(Die());
         }
     }
 
