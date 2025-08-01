@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Collider2D bodyColl;
     [SerializeField] private Collider2D footColl;
 
+    [SerializeField] private Collider2D slideColl;
+
     private Vector2 moveVel;
     private bool isFacingRight;
 
@@ -53,6 +55,20 @@ public class PlayerController : MonoBehaviour
     {
         CountTimers();
         JumpChecks();
+        if (InputManager.TurnIsHeld)
+        {
+            animator.SetBool("isSliding", true);
+            animator.SetBool("isMoving", false);
+            animator.SetBool("isJumping", false);
+            slideColl.enabled = true;
+            bodyColl.enabled = false;
+        }
+        else
+        {
+            animator.SetBool("isSliding", false);
+            slideColl.enabled = false;
+            bodyColl.enabled = true;
+        }
 
         if (InputManager.Movement != Vector2.zero)
         {
@@ -356,6 +372,18 @@ public class PlayerController : MonoBehaviour
     {
         IsGrounded();
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log($"[PlayerController.OnTriggerEnter2D] touching {collision}");
+        Brickguy enemy = collision.gameObject.GetComponentInParent<Brickguy>();
+        if (enemy != null)
+        {
+            enemy.Die();
+        }
+    }
+
+
     #endregion
 
     #region Timers

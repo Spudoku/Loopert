@@ -33,7 +33,7 @@ public class InputManager : MonoBehaviour
     private void Update()
     {
         Movement = _moveAction.ReadValue<Vector2>();
-        Debug.Log($"[InputManager.Update] {Movement}");
+        // Debug.Log($"[InputManager.Update] {Movement}");
 
         JumpWasPressed = _jumpAction.WasPerformedThisFrame();
         JumpIsHeld = _jumpAction.IsPressed();
@@ -42,7 +42,8 @@ public class InputManager : MonoBehaviour
         TurnIsHeld = Movement.y < 0;
         if (TurnIsHeld)
         {
-            Debug.Log("[InputManager.Update] Turning!");
+            // Debug.Log("[InputManager.Update] Turning!");
         }
+
     }
 }

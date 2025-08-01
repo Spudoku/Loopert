@@ -3,7 +3,7 @@ using UnityEngine;
 public class Brickguy : MonoBehaviour
 {
     [SerializeField] private float speed;
-    [SerializeField] private GameObject target;
+    [SerializeField] private Transform target;
 
     private Rigidbody2D rb;
 
@@ -26,5 +26,13 @@ public class Brickguy : MonoBehaviour
     void FixedUpdate()
     {
         // Move towards target
+        Vector2 dir = target.position - transform.position;
+
+        Debug.Log($"[Brickguy] dir: {dir}");
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
     }
 }
