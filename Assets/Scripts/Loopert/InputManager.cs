@@ -11,13 +11,14 @@ public class InputManager : MonoBehaviour
     public static bool JumpWasReleased;
     public static bool RunIsHeld;
 
-    public static bool TurnIsHeld;
+    public static bool SlideIsHeld;
+    public static bool SlideWasReleased;
 
 
     private InputAction _moveAction;
     private InputAction _jumpAction;
 
-    private InputAction turnAction;
+    private InputAction slideAction;
     // private InputAction _runAction;
 
     private void Awake()
@@ -26,7 +27,7 @@ public class InputManager : MonoBehaviour
 
         _moveAction = playerInput.actions["Move"];
         _jumpAction = playerInput.actions["Jump"];
-        // turnAction = playerInput.actions[];
+        slideAction = playerInput.actions["Crouch"];
         // _runAction = playerInput.actions["Run"];
     }
 
@@ -39,11 +40,8 @@ public class InputManager : MonoBehaviour
         JumpIsHeld = _jumpAction.IsPressed();
         JumpWasReleased = _jumpAction.WasReleasedThisFrame();
 
-        TurnIsHeld = Movement.y < 0;
-        if (TurnIsHeld)
-        {
-            // Debug.Log("[InputManager.Update] Turning!");
-        }
+        SlideIsHeld = slideAction.IsPressed();
+        SlideWasReleased = slideAction.WasReleasedThisFrame();
 
     }
 }

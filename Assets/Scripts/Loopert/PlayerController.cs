@@ -12,15 +12,27 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Collider2D bodyColl;
     [SerializeField] private Collider2D footColl;
 
+
+
+
+    [SerializeField] private bool isGrounded;
+
+    [Header("Slide-related")]
+
     [SerializeField] private Collider2D slideColl;
+
+    [SerializeField] private float slideStun = 0.5f;
+
+    [SerializeField] private float stunTimer;
+
+    // misc vars
+    private bool bumpedHead;
 
     private Vector2 moveVel;
     private bool isFacingRight;
 
     private RaycastHit2D groundHit;
     private RaycastHit2D headHit;
-    [SerializeField] private bool isGrounded;
-    private bool bumpedHead;
 
     // Jump Vars
     public float VerticalVelocity { get; private set; }
@@ -54,8 +66,12 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         CountTimers();
-        JumpChecks();
-        if (InputManager.TurnIsHeld)
+        if (stunTimer <= 0)
+        {
+            JumpChecks();
+        }
+
+        if (InputManager.SlideIsHeld && stunTimer <= 0)
         {
             animator.SetBool("isSliding", true);
             animator.SetBool("isMoving", false);
@@ -68,6 +84,16 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isSliding", false);
             slideColl.enabled = false;
             bodyColl.enabled = true;
+        }
+
+        if (InputManager.SlideWasReleased)
+        {
+            // Set Stun to True
+            animator.SetBool("isMoving", false);
+            animator.SetBool("isJumping", false);
+            slideColl.enabled = false;
+            bodyColl.enabled = true;
+            stunTimer = slideStun;
         }
 
         if (InputManager.Movement != Vector2.zero)
@@ -90,7 +116,7 @@ public class PlayerController : MonoBehaviour
 
         if (isGrounded)
         {
-            if (!InputManager.TurnIsHeld)
+            if (!InputManager.SlideIsHeld && stunTimer <= 0)
             {
                 Move(MoveStats.GroundAcceleration, MoveStats.GroundDeceleration, InputManager.Movement);
             }
@@ -98,7 +124,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if (!InputManager.TurnIsHeld)
+            if (!InputManager.SlideIsHeld && stunTimer <= 0)
             {
                 Move(MoveStats.AirAcceleration, MoveStats.AirDeceleration, InputManager.Movement);
             }
@@ -390,6 +416,8 @@ public class PlayerController : MonoBehaviour
     private void CountTimers()
     {
         jumpBufferTimer -= Time.deltaTime;
+
+        stunTimer -= Time.deltaTime;
 
         if (!isGrounded)
         {
