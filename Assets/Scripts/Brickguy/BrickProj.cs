@@ -22,7 +22,7 @@ public class BrickProj : MonoBehaviour
 
     private IEnumerator BrickDie()
     {
-        yield return new WaitForSeconds(PlayerController.DeathTime + 0.05f);
+        yield return new WaitForSeconds(1f);
         trigger.enabled = false;
         Destroy(gameObject);
     }

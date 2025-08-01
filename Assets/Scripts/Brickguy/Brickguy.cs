@@ -148,7 +148,7 @@ public class Brickguy : MonoBehaviour
         {
             float root = Mathf.Sqrt(discriminant);
             Debug.Log($"[BrickGuy.CalculateTrajectory] root: {root}");
-            float tanTheta = (sSqr + root) / 2;
+            float tanTheta = (sSqr - root) / 2;
 
             float theta = Mathf.Atan2(tanTheta, g * x);
 

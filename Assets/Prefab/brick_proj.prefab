@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: brick_proj
       objectReference: {fileID: 0}
+    - target: {fileID: -2253911629886400664, guid: a269954508487b848b5263b26f20afbb, type: 3}
+      propertyPath: m_TagString
+      value: enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 7878350319992209165, guid: a269954508487b848b5263b26f20afbb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9.24
@@ -88,7 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trigger: {fileID: 290540351600121785}
   mainCollider: {fileID: 6477155420779593169}
-  intangibilityTime: 0.5
+  intangibilityTime: 0.1
   owner: {fileID: 0}
 --- !u!50 &2327637513665092664
 Rigidbody2D:

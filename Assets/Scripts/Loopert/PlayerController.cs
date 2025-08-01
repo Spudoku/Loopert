@@ -444,11 +444,18 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (InputManager.SlideIsHeld && stunTimer <= 0)
+        {
+            return;
+        }
         Brickguy enemy = collision.gameObject.GetComponentInParent<Brickguy>();
-        if (enemy != null)
+
+        if (enemy != null || collision.gameObject.CompareTag("enemy"))
         {
             StartCoroutine(Die());
         }
+
+
     }
 
 
