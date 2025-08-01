@@ -92,7 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trigger: {fileID: 290540351600121785}
   mainCollider: {fileID: 6477155420779593169}
-  intangibilityTime: 0.1
+  intangibilityTime: 0.05
   owner: {fileID: 0}
 --- !u!50 &2327637513665092664
 Rigidbody2D:

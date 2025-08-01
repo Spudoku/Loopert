@@ -434,7 +434,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log($"[PlayerController.OnTriggerEnter2D] touching {collision}");
+        // Debug.Log($"[PlayerController.OnTriggerEnter2D] touching {collision}");
         Brickguy enemy = collision.gameObject.GetComponentInParent<Brickguy>();
         if (enemy != null)
         {

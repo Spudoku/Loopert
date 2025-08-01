@@ -62,11 +62,11 @@ public class Brickguy : MonoBehaviour
             else
             {
                 // Move towards target
-                // Vector2 dir = target.position - transform.position;
+                Vector2 dir = target.position - transform.position;
 
-                // Vector2 targetVel = new Vector2(Mathf.Sign(dir.x), 0) * maxSpeed;
-                // moveVel = Vector2.Lerp(moveVel, targetVel, acceleration * Time.fixedDeltaTime);
-                // rb.linearVelocity = new(moveVel.x, rb.linearVelocity.y);
+                Vector2 targetVel = new Vector2(Mathf.Sign(dir.x), 0) * maxSpeed;
+                moveVel = Vector2.Lerp(moveVel, targetVel, acceleration * Time.fixedDeltaTime);
+                rb.linearVelocity = new(moveVel.x, rb.linearVelocity.y);
             }
 
 
