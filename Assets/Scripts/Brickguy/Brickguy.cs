@@ -17,6 +17,7 @@ public class Brickguy : MonoBehaviour
     [SerializeField] private GameObject brickPrefab;
     [SerializeField] private float throwStrength;
     [SerializeField] private float throwCooldown;
+    [SerializeField] private float throwWindup = 1f;
     [SerializeField] private AudioClip throwSFX;
 
     private float throwTimer;
@@ -40,6 +41,7 @@ public class Brickguy : MonoBehaviour
     {
         if (transform.position.y < PlayerController.yToDie)
         {
+            StopAllCoroutines();
             StartCoroutine(Die());
         }
 
@@ -53,7 +55,7 @@ public class Brickguy : MonoBehaviour
 
             if (throwTimer < 0)
             {
-                Throw();
+                StartCoroutine(ThrowWindup());
             }
             else
             {
@@ -73,12 +75,45 @@ public class Brickguy : MonoBehaviour
 
     public IEnumerator Die()
     {
+
         yield return null;
         Destroy(gameObject);
     }
 
+    private IEnumerator ThrowWindup()
+    {
+        throwTimer = throwCooldown + throwWindup;
+        yield return new WaitForSeconds(throwWindup);
+        Throw();
+
+    }
     private void Throw()
     {
-        throwTimer = throwCooldown;
+        Debug.Log($"[BrickGuy.Throw] throwing brick!");
+
+
+
+        GameObject newBrick = Instantiate(brickPrefab);
+        newBrick.transform.position = transform.position;
+
+        BrickProj brickProj = newBrick.GetComponent<BrickProj>();
+        brickProj.owner = gameObject;
+
+        brickProj.Intangibility();
+
+
+        // throw in general direction of target
+        Rigidbody2D brickRB = newBrick.GetComponent<Rigidbody2D>();
+        Vector2 throwForce = CalculateTrajectory(target.position, throwStrength);
+
+        brickRB.AddForce(throwForce, ForceMode2D.Impulse);
+
+    }
+
+    private Vector2 CalculateTrajectory(Vector2 targetPosition, float force)
+    {
+        // TODO: factor for trajectory
+        float t = 0f;
+        return (target.position - transform.position).normalized * force;
     }
 }

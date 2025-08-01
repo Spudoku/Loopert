@@ -6,9 +6,18 @@ public class BrickProj : MonoBehaviour
 
 
     [SerializeField] private Collider2D trigger;
+    [SerializeField] private Collider2D mainCollider;
+
+    [SerializeField] private float intangibilityTime = 0.5f;
+    public GameObject owner;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        StartCoroutine(BrickDie());
+
+        if (collision.gameObject != owner)
+        {
+            StartCoroutine(BrickDie());
+        }
+
     }
 
     private IEnumerator BrickDie()
@@ -24,5 +33,18 @@ public class BrickProj : MonoBehaviour
         {
             StartCoroutine(BrickDie());
         }
+    }
+
+    public void Intangibility()
+    {
+        mainCollider.enabled = false;
+        StartCoroutine(TimedIntangibility(intangibilityTime));
+    }
+
+    private IEnumerator TimedIntangibility(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        mainCollider.enabled = true;
     }
 }
