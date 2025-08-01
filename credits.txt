@@ -9,7 +9,13 @@ Unity learn: tutorials on projectile motion
 
 
 #### Audio Assets ####
+Game Jump Sound - Boing (2 of 2) by el_boss -- https://freesound.org/s/751699/ -- License: Creative Commons 0
 
+Slotted Spoon whoosh.wav by saturdaysoundguy -- https://freesound.org/s/391446/ -- License: Creative Commons 0
+
+Creepy Siren #2 by NicknameLarry -- https://freesound.org/s/489895/ -- License: Creative Commons 0
+
+05224 fireball whoosh.wav by Robinhood76 -- https://freesound.org/s/248116/ -- License: Attribution NonCommercial 4.0
 
 #### Fonts ####
 Thaleah
