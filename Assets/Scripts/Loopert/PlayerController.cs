@@ -25,7 +25,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float stunTimer;
 
     [Header("Level Interaction")]
-    [SerializeField] private float yToDie = -10f;
+    public static float yToDie = -10f;
+    public static float DeathTime = 1.5f;
     // misc vars
     private bool bumpedHead;
 
@@ -149,14 +150,18 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Die()
     {
         // TODO: play sound effect, etc
-
+        animator.speed = 0;
         Rigidbody2D[] rigidBodies = Object.FindObjectsByType<Rigidbody2D>(FindObjectsSortMode.None);
 
         foreach (Rigidbody2D rb in rigidBodies)
         {
-            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            if (!rb.gameObject.TryGetComponent<BrickProj>(out _))
+            {
+                rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            }
+
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(DeathTime);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -433,7 +438,7 @@ public class PlayerController : MonoBehaviour
         Brickguy enemy = collision.gameObject.GetComponentInParent<Brickguy>();
         if (enemy != null)
         {
-            enemy.Die();
+            StartCoroutine(enemy.Die());
         }
     }
 
