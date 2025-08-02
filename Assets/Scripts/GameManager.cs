@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     {
         // show tutorial UI
         SetMenu(true);
+
     }
 
 
@@ -32,12 +33,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public static IEnumerator EndSequence()
-    {
-        Debug.Log($"[Portal.EndSequence] started end sequence!");
-        yield return null;
-        Application.Quit();
-    }
+
 
     public void ToggleMenu()
     {

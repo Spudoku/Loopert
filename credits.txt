@@ -19,6 +19,10 @@ Creepy Siren #2 by NicknameLarry -- https://freesound.org/s/489895/ -- License: 
 
 silly cartoony hits.wav by damnsatinist -- https://freesound.org/s/669217/ -- License: Attribution 4.0
 
+Jingle_Lose_01.wav by LittleRobotSoundFactory -- https://freesound.org/s/270334/ -- License: Attribution 4.0
+
+win.mp3 by David819 -- https://freesound.org/s/668436/ -- License: Creative Commons 0
+
 #### Fonts ####
 Thaleah
     https://assetstore.unity.com/packages/2d/fonts/free-pixel-font-thaleah-140059

@@ -20,7 +20,7 @@ public class Brickguy : MonoBehaviour
     [SerializeField] private float throwStrength;
     [SerializeField] private float throwCooldown;
     [SerializeField] private float throwWindup = 1f;
-    [SerializeField] private AudioClip throwSFX;
+    [SerializeField] private AudioSource throwSFX;
 
     private float throwTimer;
 
@@ -94,7 +94,7 @@ public class Brickguy : MonoBehaviour
     {
         Vector2 startPos = (target.position - transform.position).normalized + transform.position;
         Vector2 throwForce = CalculateTrajectory(target.position, startPos, throwStrength);
-
+        throwSFX.Play();
         // Can't reach target
         if (throwForce == Vector2.zero)
         {

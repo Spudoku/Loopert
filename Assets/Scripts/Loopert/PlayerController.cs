@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Level Interaction")]
     public static float yToDie = -10f;
-    public static float DeathTime = 1.5f;
+    public static float DeathTime = 0.5f;
 
     [Header("Sounds")]
     [SerializeField] AudioSource jumpSFX;
@@ -157,8 +157,10 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Die()
     {
         // TODO: play sound effect, etc
+
         animator.speed = 0;
         Rigidbody2D[] rigidBodies = Object.FindObjectsByType<Rigidbody2D>(FindObjectsSortMode.None);
+        dieSFX.Play();
 
         foreach (Rigidbody2D rb in rigidBodies)
         {
@@ -168,7 +170,7 @@ public class PlayerController : MonoBehaviour
             }
 
         }
-        yield return new WaitForSeconds(DeathTime);
+        yield return new WaitForSeconds(dieSFX.clip.length + DeathTime);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
