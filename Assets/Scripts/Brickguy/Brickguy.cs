@@ -92,7 +92,8 @@ public class Brickguy : MonoBehaviour
     }
     private void Throw()
     {
-        Vector2 throwForce = CalculateTrajectory(target.position, throwStrength);
+        Vector2 startPos = (target.position - transform.position).normalized + transform.position;
+        Vector2 throwForce = CalculateTrajectory(target.position, startPos, throwStrength);
 
         // Can't reach target
         if (throwForce == Vector2.zero)
@@ -108,7 +109,7 @@ public class Brickguy : MonoBehaviour
 
 
         GameObject newBrick = Instantiate(brickPrefab);
-        newBrick.transform.position = transform.position;
+        newBrick.transform.position = startPos;
 
         BrickProj brickProj = newBrick.GetComponent<BrickProj>();
         brickProj.owner = gameObject;
@@ -127,9 +128,9 @@ public class Brickguy : MonoBehaviour
     // trajectory equation
     // returns Vector2.zero if no valid trajectory
     // code based on https://learn.unity.com/tutorial/calculating-trajectories
-    private Vector2 CalculateTrajectory(Vector2 targetPosition, float force)
+    private Vector2 CalculateTrajectory(Vector2 targetPosition, Vector2 startPosition, float force)
     {
-        Vector2 dir = targetPosition - (Vector2)transform.position;
+        Vector2 dir = targetPosition - startPosition;
 
         float y = dir.y;
 

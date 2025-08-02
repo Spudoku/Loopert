@@ -19,6 +19,10 @@ public class InputManager : MonoBehaviour
     private InputAction _jumpAction;
 
     private InputAction slideAction;
+
+    private InputAction pauseAction;
+
+    public static bool PauseWasPressed;
     // private InputAction _runAction;
 
     private void Awake()
@@ -28,7 +32,7 @@ public class InputManager : MonoBehaviour
         _moveAction = playerInput.actions["Move"];
         _jumpAction = playerInput.actions["Jump"];
         slideAction = playerInput.actions["Crouch"];
-        // _runAction = playerInput.actions["Run"];
+        pauseAction = playerInput.actions["Pause"];
     }
 
     private void Update()
@@ -42,6 +46,8 @@ public class InputManager : MonoBehaviour
 
         SlideIsHeld = slideAction.IsPressed();
         SlideWasReleased = slideAction.WasReleasedThisFrame();
+
+        PauseWasPressed = pauseAction.WasPerformedThisFrame();
 
     }
 }

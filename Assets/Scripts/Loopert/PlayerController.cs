@@ -27,6 +27,13 @@ public class PlayerController : MonoBehaviour
     [Header("Level Interaction")]
     public static float yToDie = -10f;
     public static float DeathTime = 1.5f;
+
+    [Header("Sounds")]
+    [SerializeField] AudioSource jumpSFX;
+    [SerializeField] AudioSource dieSFX;
+    [SerializeField] AudioSource burnSFX;
+
+
     // misc vars
     private bool bumpedHead;
 
@@ -291,7 +298,7 @@ public class PlayerController : MonoBehaviour
         isJumping = true;
 
         jumpBufferTimer = 0f;
-
+        jumpSFX.Play();
         numberOfJumpsUsed += _numberOfJumpsUsed;
         VerticalVelocity = MoveStats.InitialJumpVelocity;
     }
@@ -438,6 +445,7 @@ public class PlayerController : MonoBehaviour
         Brickguy enemy = collision.gameObject.GetComponentInParent<Brickguy>();
         if (enemy != null)
         {
+            burnSFX.Play();
             StartCoroutine(enemy.Die());
         }
     }
@@ -449,8 +457,9 @@ public class PlayerController : MonoBehaviour
             return;
         }
         Brickguy enemy = collision.gameObject.GetComponentInParent<Brickguy>();
+        BrickProj brickProj = collision.gameObject.GetComponentInParent<BrickProj>();
 
-        if (enemy != null || collision.gameObject.CompareTag("enemy"))
+        if (enemy != null || brickProj != null || collision.gameObject.CompareTag("enemy"))
         {
             StartCoroutine(Die());
         }

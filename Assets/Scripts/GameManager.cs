@@ -5,27 +5,23 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private static GameObject menu;
-    static bool isPaused = true;
-    public static void StartSequence()
+    [SerializeField] private GameObject menu;
+    [SerializeField] bool isPaused = true;
+    public void StartSequence()
     {
         // show tutorial UI
         SetMenu(true);
     }
 
-    public static void ToggleMenu()
-    {
-        isPaused = !isPaused;
-        SetMenu(isPaused);
-    }
 
-    private static void SetMenu(bool paused)
-    {
-        menu.SetActive(paused);
-    }
 
     private void Update()
     {
+        if (InputManager.PauseWasPressed)
+        {
+            ToggleMenu();
+        }
+
         if (isPaused)
         {
             Time.timeScale = 0;
@@ -41,5 +37,16 @@ public class GameManager : MonoBehaviour
         Debug.Log($"[Portal.EndSequence] started end sequence!");
         yield return null;
         Application.Quit();
+    }
+
+    public void ToggleMenu()
+    {
+        isPaused = !isPaused;
+        SetMenu(isPaused);
+    }
+
+    private void SetMenu(bool paused)
+    {
+        menu.SetActive(paused);
     }
 }
